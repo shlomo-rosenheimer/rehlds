@@ -418,7 +418,7 @@ void GetStatsString(char *buf, int bufSize)
 {
 	long double avgOut = 0.0;
 	long double avgIn = 0.0;
-	int players = 0;// qqq
+	int players = 0;
 	int total = 0;	
 	int humans = 0;	
 	int bots = 0;	
@@ -438,10 +438,13 @@ void GetStatsString(char *buf, int bufSize)
 			continue;
 		}
 
-		if (host_client->pViewEntity->v.flags & FL_IMMUNE_LAVA) {
-			wargs++;
-		} else {
-			humans++;
+		if(host_client->active && host_client->connected && host_client->spawned) {
+			if (host_client->pViewEntity->v.flags & FL_IMMUNE_LAVA) {
+			//if (host_client->edict->v.flags & FL_IMMUNE_LAVA) {
+				wargs++;
+			} else {
+				humans++;
+			}
 		}
 
 		avgIn = avgIn + host_client->netchan.flow[FLOW_INCOMING].avgkbytespersec;
@@ -455,10 +458,10 @@ void GetStatsString(char *buf, int bufSize)
 			   (int)floor(Sys_FloatTime() - startTime) / 60,
 			   g_userid - 1,
 			   (float)(1.0 / host_frametime),
-			   total,
-			   humans,
-			   bots,
-			   wargs);
+			   (int)total,
+			   (int)humans,
+			   (int)bots,
+			   (int)wargs);
 	buf[bufSize - 1] = 0;
 }
 
