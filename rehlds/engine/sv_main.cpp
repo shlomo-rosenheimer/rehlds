@@ -2383,7 +2383,8 @@ void EXT_FUNC SV_ConnectClient_internal(void)
 		Steam_NotifyClientDisconnect(client);
 #endif
 
-		Con_Printf("%s:reconnect\n", NET_AdrToString(adr));
+		// qqq
+		//Con_Printf("%s:reconnect\n", NET_AdrToString(adr));
 	}
 	else
 	{

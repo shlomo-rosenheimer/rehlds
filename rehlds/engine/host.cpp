@@ -466,7 +466,7 @@ void SV_DropClient_internal(client_t *cl, qboolean crash, const char *string)
 
 		// qqq
 		//Sys_Printf("Dropped %s from server\nReason:  %s\n", cl->name, string);
-		Sys_Printf("Dropped %s from server; Reason: %s\n", cl->name, string);
+		Sys_Printf("Dropped %s%s from server; Reason: %s\n", cl->fakeclient?"[BOT] ":"", cl->name, string);
 
 		if (!cl->fakeclient)
 			Netchan_Transmit(&cl->netchan, i, final);
