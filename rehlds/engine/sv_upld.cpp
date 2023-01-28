@@ -139,13 +139,13 @@ void SV_CreateCustomizationList(client_t *pHost)
 				pCust->nUserData2 = nLumps;
 				gEntityInterface.pfnPlayerCustomization(pHost->edict, pCust);
 			}
-			else
-			{
-				if (sv_allow_upload.value == 0.0f)
-					Con_Printf("Ignoring custom decal from %s\n", pHost->name);
-				else
-					Con_Printf("Ignoring invalid custom decal from %s\n", pHost->name);
-			}
+			// else
+			// {
+			// 	if (sv_allow_upload.value == 0.0f)
+			// 		Con_Printf("Ignoring custom decal from %s\n", pHost->name);
+			// 	else
+			// 		Con_Printf("Ignoring invalid custom decal from %s\n", pHost->name);
+			// }
 		}
 	}
 }

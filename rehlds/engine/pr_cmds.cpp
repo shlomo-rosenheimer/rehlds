@@ -2559,7 +2559,9 @@ const char* EXT_FUNC PF_GetPlayerAuthId(edict_t *e)
 
 		if (cl->fakeclient)
 		{
-			Q_strcpy(szAuthID[count], "BOT");
+			//Q_strcpy(szAuthID[count], "BOT");
+			// qqq emulate bot steam id
+			Q_snprintf(szAuthID[count], sizeof(szAuthID[count]) - 1, "%s", SV_GetClientIDString(cl));
 		}
 //		AUTH_IDTYPE_LOCAL is handled inside SV_GetIDString(), no need to do it here
 #ifndef REHLDS_FIXES

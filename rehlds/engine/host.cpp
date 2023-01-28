@@ -464,7 +464,9 @@ void SV_DropClient_internal(client_t *cl, qboolean crash, const char *string)
 		if (cl->edict && cl->spawned)
 			gEntityInterface.pfnClientDisconnect(cl->edict);
 
-		Sys_Printf("Dropped %s from server\nReason:  %s\n", cl->name, string);
+		// qqq
+		//Sys_Printf("Dropped %s from server\nReason:  %s\n", cl->name, string);
+		Sys_Printf("Dropped %s from server; Reason: %s\n", cl->name, string);
 
 		if (!cl->fakeclient)
 			Netchan_Transmit(&cl->netchan, i, final);

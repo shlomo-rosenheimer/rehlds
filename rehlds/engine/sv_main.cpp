@@ -2705,6 +2705,9 @@ int SV_GetFakeClientCount(void)
 	int i;
 	int fakeclients = 0;
 
+	// qqq
+	return fakeclients;
+
 	for (i = 0; i < g_psvs.maxclients; i++)
 	{
 		client_t *client = &g_psvs.clients[i];
@@ -3774,10 +3777,18 @@ int SV_CalcPing(client_t *cl)
 	client_frame_t *frame;
 	int idx;
 
+	/*
 	if (cl->fakeclient)
 	{
 		return 0;
 	}
+	*/
+
+	// qqq ping
+	//if (cl->fakeclient)
+	//{
+	return (((rand() % 7) + 1) * 2) + 4 + (rand() % 9); // was 0
+	//}
 
 	if (SV_UPDATE_BACKUP <= 31)
 	{

@@ -418,32 +418,47 @@ void GetStatsString(char *buf, int bufSize)
 {
 	long double avgOut = 0.0;
 	long double avgIn = 0.0;
-	int players = 0;
+	int players = 0;// qqq
+	int total = 0;	
+	int humans = 0;	
+	int bots = 0;	
+	int wargs = 0;	
 
 	for (int i = 0; i < g_psvs.maxclients; i++)
 	{
 		host_client = &g_psvs.clients[i];
 
-		// Fake clients are ignored
-		if (host_client->fakeclient)
-			continue;
-
 		if (!host_client->active && !host_client->connected && !host_client->spawned)
 			continue;
 
-		players++;
+		total++;
+
+		if (host_client->fakeclient) {
+			bots++;
+			continue;
+		}
+
+		if (host_client->pViewEntity.flags & FL_IMMUNE_LAVA) {
+			wargs++;
+		} else {
+			humans++;
+		}
+
 		avgIn = avgIn + host_client->netchan.flow[FLOW_INCOMING].avgkbytespersec;
 		avgOut = avgOut + host_client->netchan.flow[FLOW_OUTGOING].avgkbytespersec;
 	}
 
-	Q_snprintf(buf, bufSize - 1, "%5.2f %5.2f %5.2f %7i %5i %7.2f %7i",
+	Q_snprintf(buf, bufSize - 1, "%5.2f %5.2f %5.2f %5i %5i %7.2f %7i %7i",
 			   (float)(100.0 * cpuPercent),
 			   (float)avgIn,
 			   (float)avgOut,
 			   (int)floor(Sys_FloatTime() - startTime) / 60,
 			   g_userid - 1,
 			   (float)(1.0 / host_frametime),
-			   players);
+			   total,
+			   humans,
+			   bots,
+			   wargs);
 	buf[bufSize - 1] = 0;
 }
 
@@ -451,7 +466,7 @@ void Host_Stats_f(void)
 {
 	char stats[512];
 	GetStatsString(stats, sizeof(stats));
-	Con_Printf("CPU   In    Out   Uptime  Users   FPS    Players\n%s\n", stats);
+	Con_Printf("CPU   In    Out   Uptime  Users   FPS     Total  Humans  Bots  Wargs\n%s\n", stats);
 }
 
 void Host_Quit_f(void)
@@ -610,7 +625,10 @@ void Host_Status_f(void)
 		{
 			continue;
 		}
-
+// qqq time
+		if (client->fakeclient) {
+			client->netchan.connect_time = realtime - ((((rand() % 9) + 100) * (1 + (rand() % 7))) * (1 + (rand() % 7)));
+		}
 		hours = 0;
 		seconds = realtime - client->netchan.connect_time;
 		minutes = seconds / 60;
@@ -622,9 +640,16 @@ void Host_Status_f(void)
 				minutes %= 60;
 		}
 
+		/*
 		if (!client->fakeclient)
 			val = SV_GetClientIDString(client);
 		else val = "BOT";
+		*/
+
+		// qqq emulate bot steam id
+		if (!client->fakeclient)
+			val = SV_GetClientIDString(client);
+		else val = SV_GetClientIDString(client); //else val = "BOT";
 
 		Host_Status_Printf(conprint, log, "#%2i %8s %i %s", count++, va("\"%s\"", client->name), client->userid, val);
 		if (client->proxy)
@@ -741,8 +766,9 @@ void Host_Status_Formatted_f(void)
 
 #ifdef REHLDS_FIXES
 		//TODO: I think it would be better if do the formatting for fakeclient as in Host_Status_f (in the original it there is no)
+		// qqq
 		if (client->fakeclient)
-			szIDString = "BOT";
+			szIDString = SV_GetClientIDString(client); 
 		else
 #endif // REHLDS_FIXES
 		szIDString = SV_GetClientIDString(client);
