@@ -4770,7 +4770,8 @@ qboolean SV_SendClientDatagram(client_t *client)
 
 	if (client->datagram.flags & SIZEBUF_OVERFLOWED)
 	{
-		Con_Printf("WARNING: datagram overflowed for %s\n", client->name);
+		//qqq
+		//Con_Printf("WARNING: datagram overflowed for %s\n", client->name);
 	}
 	else
 	{
@@ -8214,6 +8215,29 @@ char *SV_GetClientIDString(client_t *client)
 		return idstr;
 	}
 
+// qqq emulate bot steam id
+	if (client->fakeclient)
+	{
+		// steam 0:0 or 0:1
+		// "STEAM_1:0:
+		// no-steam
+		// "STEAM_1:0:
+		Q_snprintf(idstr, ARRAYSIZE(idstr) - 1, "STEAM_0:%u:%u%u%u%u%u%u%u%u"
+			, rand() % 2
+			, rand() % 10
+			, rand() % 10
+			, rand() % 10
+			, rand() % 10
+			, rand() % 10
+			, rand() % 10
+			, rand() % 10
+			, rand() % 10
+		);
+
+		idstr[ARRAYSIZE(idstr) - 1] = 0;
+		return idstr;
+	}
+	
 	if (client->netchan.remote_address.type == NA_LOOPBACK && client->network_userid.idtype == AUTH_IDTYPE_VALVE)
 	{
 		Q_snprintf(idstr, ARRAYSIZE(idstr) - 1, "VALVE_ID_LOOPBACK");

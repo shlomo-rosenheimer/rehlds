@@ -448,7 +448,7 @@ void GetStatsString(char *buf, int bufSize)
 		avgOut = avgOut + host_client->netchan.flow[FLOW_OUTGOING].avgkbytespersec;
 	}
 
-	Q_snprintf(buf, bufSize - 1, "%5.2f %5.2f %5.2f %5i %5i %7.2f %7i %7i",
+	Q_snprintf(buf, bufSize - 1, "%5.2f %5.2f %5.2f %5i %7i %7.2f %7i %7i %7i %7i",
 			   (float)(100.0 * cpuPercent),
 			   (float)avgIn,
 			   (float)avgOut,
