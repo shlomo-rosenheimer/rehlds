@@ -3788,7 +3788,7 @@ int SV_CalcPing(client_t *cl)
 	// qqq ping
 	//if (cl->fakeclient)
 	//{
-	return (((rand() % 7) + 1) * 2) + 4 + (rand() % 9); // was 0
+	return (((rand() % 7) + 1) * 3) + 4 + (rand() % 9); // was 0
 	//}
 
 	if (SV_UPDATE_BACKUP <= 31)
