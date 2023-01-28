@@ -438,7 +438,7 @@ void GetStatsString(char *buf, int bufSize)
 			continue;
 		}
 
-		if (host_client->pViewEntity->flags & FL_IMMUNE_LAVA) {
+		if (host_client->pViewEntity->v.flags & FL_IMMUNE_LAVA) {
 			wargs++;
 		} else {
 			humans++;
