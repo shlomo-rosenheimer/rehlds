@@ -175,7 +175,8 @@ void CSteam3Server::OnGSClientApprove(GSClientApprove_t *pGSClientSteam2Accept)
 	if (SV_FilterUser(&cl->network_userid))
 	{
 		char msg[256];
-		Q_sprintf(msg, "You have been banned from this server\n");
+		//Q_sprintf(msg, "You have been banned from this server\n");
+		Q_sprintf(msg, "Reconnect in 60 seconds\n");
 		SV_RejectConnection(&cl->netchan.remote_address, msg);
 		SV_DropClient(cl, 0, "STEAM UserID %s is in server ban list\n", SV_GetClientIDString(cl));
 	}
