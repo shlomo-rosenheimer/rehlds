@@ -3653,7 +3653,7 @@ qboolean SV_FilterPacket(void)
 void SV_SendBan(void)
 {
 	char szMessage[64];
-	Q_snprintf(szMessage, sizeof(szMessage), "Reconnect in 60 seconds.\n");
+	Q_snprintf(szMessage, sizeof(szMessage), "Reconnect in 10 seconds.\n");
 	//Q_snprintf(szMessage, sizeof(szMessage), "You have been banned from this server.\n");
 
 	SZ_Clear(&net_message);
